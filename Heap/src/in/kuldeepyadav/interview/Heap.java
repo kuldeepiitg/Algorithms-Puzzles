@@ -100,11 +100,36 @@ public class Heap {
 		
 		Object toReturn = heap[1];
 		int lastIndex = 1;
-		while(comparator.compare(heap[2*lastIndex], obj) > 0) {
-			heap[lastIndex] = heap[lastIndex*2];
-			lastIndex *= 2;
+		for (int childIndex = chooseChildIndex(lastIndex); childIndex > 0; childIndex = chooseChildIndex(lastIndex)) {
+			
+			if (comparator.compare(heap[childIndex], heap[lastIndex]) > 0) {
+				heap[lastIndex] = heap[childIndex];
+				lastIndex = childIndex;
+			} else {
+				break;
+			}
 		}
 		heap[lastIndex] = obj;
+		
+	}
+	
+	/**
+	 * @param parentIndex index of parent node.
+	 * @return index of child who is larger
+	 */
+	private int chooseChildIndex(int parentIndex) {
+		
+		if (parentIndex*2+1 < heap.length) {
+			if (comparator.compare(heap[parentIndex*2+1], heap[parentIndex*2]) > 0) {
+				return parentIndex*2+1;
+			} else {
+				return parentIndex*2;
+			}
+		} else if (parentIndex*2 < heap.length) {
+			return parentIndex*2;
+		} else {
+			return -1;
+		}
 	}
 	
 }
