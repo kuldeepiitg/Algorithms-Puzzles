@@ -29,9 +29,20 @@ Small Improvement can lead to further reduction in time complexity. While findin
 <h4>Algorithm 2 :</h4> 
 
 Reverse the preorder traversal to get back the BST.
-1. Initialize root pointing node having last value. 
-2. Iterate preorder in reverse order.
-    2.1 If next node is smaller than root then make the right of new node point to current subtree. And make the new node root child of tree.
-    2.2 If next node is larger than root then go on traversing rightmost series of edges and stop at the first node which is larger than next node. That means the found node and all its children are smaller than the next node. Also  all skiped nodes and their left children are smaller than next node. Make larger subtree as right child of new node and skipped one as left subtree. Take new node as root. Refer to image.
 
-![alt tag](https://github.com/kuldeepiitg/Google-Interviews/tree/master/Preorder\ to\ BST/images/PreorderTOBST.jpg)
+1. Initialize root pointing node having last value. 
+
+2. Iterate preorder in reverse order.
+
+    2.1 If next node is smaller than root then make the right of new node point to current subtree. And make the new node root child of tree.
+
+    2.2 If next node is larger than root then go on traversing rightmost series of edges and stop at the first node which is larger than next node. That means the found node and all its children are smaller than the next node. Also  all skiped nodes and their left children are smaller than next node. Make larger subtree as right child of new node and skipped one as left subtree. Take new node as root. Refer to image.
+    
+<h5>Time and Space:</h5>
+Time: O(n)
+
+Space: O(1)
+
+Because no node/edge is visted more than twice so maximum time taken will be O(n).
+
+![alt tag](https://raw.githubusercontent.com/kuldeepiitg/Google-Interviews/master/Preorder%20to%20BST/images/PreorderToBST.jpg)
