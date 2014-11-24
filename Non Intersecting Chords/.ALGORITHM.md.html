@@ -459,23 +459,25 @@ function setDocumentScrollTop(ypos)
 </head>
 <body class="markdown-body">
 <h1> <a id="user-content-non-intersecting-chords-on-a-circle" class="anchor" href="#non-intersecting-chords-on-a-circle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non Intersecting Chords on a Circle</h1> 
-<h3> <a id="user-content-statement--given-2n-points-on-a-circlefind-the-number-of-ways-to-draw-n-non-intersecting-chords" class="anchor" href="#statement--given-2n-points-on-a-circlefind-the-number-of-ways-to-draw-n-non-intersecting-chords" aria-hidden="true"><span class="octicon octicon-link"></span></a> Statement : Given 2n points on a circle.find the number of ways to draw n non intersecting chords. </h3> 
+<h3> <a id="user-content-statement--given-2n-points-n-pairs-of-points-on-a-circlefind-the-number-of-ways-to-draw-n-non-intersecting-chords" class="anchor" href="#statement--given-2n-points-n-pairs-of-points-on-a-circlefind-the-number-of-ways-to-draw-n-non-intersecting-chords" aria-hidden="true"><span class="octicon octicon-link"></span></a> Statement : Given 2n points (n pairs of points) on a circle.find the number of ways to draw n non intersecting chords. </h3> 
 <h4> <a id="user-content-algorithm-" class="anchor" href="#algorithm-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Algorithm : </h4> 
 <p>Take two points on circle to make a chrod. This cord will divide circle into two convex connected loops which can further be considered as circles. Find number of ways for these smaller circles and use them to find total.</p> 
-<p>Recurrence equation: C(2n) = ∑C(2k)*C(2n-2-2k), where k is such that k &lt; n and n-1-k &gt;= 0</p> 
+<p>Recurrence equation: C(n) = ∑C(k)*C(n-1-k), where k is such that k &lt; n and n-1-k &gt;= 0</p> 
 <p>Use dynamic programming. We must divide circle such that both of the newly formed circles have even points. If not, then either we won't have n chords or we will end up in intersection of a chord in to our dividing chord.</p> 
 <h4> <a id="user-content-pseudo-code" class="anchor" href="#pseudo-code" aria-hidden="true"><span class="octicon octicon-link"></span></a> Pseudo code: </h4> 
 <pre><code>    Make a look up table. 
 
-    to compute C(2n),
+    C(0) = 1
+    to compute C(n),
     sum of P(k) for k between 0 to n-1 :
-        compute C(2k) and C(2n-2-2k), and save if they are not in table
+        compute C(k) and C(n-1-k), and save if they are not in table
         otherwise pick them from table
-        P(k) = C(2k)*C(2n-2-2k)
+        P(k) = C(k)*C(n-1-k)
 
-    return C(2n)
+    return C(n)
 </code></pre> 
 <h4> <a id="user-content-complexity" class="anchor" href="#complexity" aria-hidden="true"><span class="octicon octicon-link"></span></a> Complexity: </h4> 
-<p>Time : O(n)<br /> Space : O(n)</p>
+<p>Time : O(n)<br /> Space : O(n)</p> 
+<p>Note : C(n) is equal to nth Catalan number. So it can be computed in O(n) space by evaluating the formula.</p>
 </body>
 </html>
