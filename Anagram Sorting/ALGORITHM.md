@@ -9,18 +9,10 @@ Write a method to sort an array of strings so that all the anagrams are next to 
 <h4>
 Algorithm :
 </h4>
-Consider strings equal if they are anagrams otherwise take them lexicographically. 
-
-To check if they are anagrams make a hashmap
-where key is a character and value is number of instances of the character in string. 
-Now check is the two strings have equal number
-of instances of each character.
+To compare two strings, sort them character by character and compare the sorted characters array lexicographically. If both of them are equal then consider strings to be equal.
 
 <h4>
-Complexity:
+Complexity :
 </h4>
-Anagrams Time : O(n) <br>
-		Space : O(1) because character set is finite, so is the size of keyset of hashmap.
-		
-Sorting Time : O(nlogn) <br>
-		Space : O(n) if temperory array is removed and inplace merging is done then it will be O(1)
+Time: O(nlogn)*O(klogk) where k is upperbound on length of strings.<br>
+Space : O(n) in sorting. It can be reduced to O(1) if we do inplace merging.
