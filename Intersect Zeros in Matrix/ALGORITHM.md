@@ -11,7 +11,8 @@ row wise or column wise.
 <h4>
 Aldorithm :
 </h4>
-Use greedy approach. Find the row or column which have maximum number of 0s. Cut it with line and repeat
+Use greedy approach. Find the row or column which have maximum number of 0s. 
+Cut it with line and repeat
 procedure for remaining smaller matrix.
 
 <h4>
@@ -20,11 +21,28 @@ Pseudo Code :
 ```
 1. Iterate over whole matrix and count number of zeros in each row and column.
 2. Find row/column which have maximum zeros.
-	2.1 Let's say it is ith row, so iterate over it and decrease zeros count for columns if there is
-	some zero in that row in the corresponding column.
-	2.2 Now consider remaining matrix and repeat step 2 until we are left with all rows having no zero.
+	2.1 Let's say it is ith row, so iterate over it and decrease zeros count for columns 
+		if there is some zero in that row in the corresponding column.
+	2.2 Now consider remaining matrix and repeat step 2 until we are left with all rows 
+		having no zero.
 	
 ``` 
+
+<h4>
+Proof of Correctness :
+</h4>
+Greedy Choice : Every time I choose row/column having maximum zeros of remaining matrix.
+Claim : If in 'n' steps I cut maximum possible zeros then choosing column or row with maximum
+zeros in next step will give me intersection of maximum number of zeros in 'n+1' steps i.e. there is no 
+other row or column that can give me more than this.
+Then by induction I propose that the algorithm will cut maximum(all) zeros in minimum steps(lines).
+
+Suppose not, there is another row/column which can give me better solution that means in 'n+1'th step,
+it is intersecting more zeros than the one given by algorithm. That means this row/column have more 
+zeros left than the one chosen by the greedy algorithm. It is a contradiction that mean no such 
+row/column can exist.
+
+![GitHub Logo](https://lh3.googleusercontent.com/lfHsAlQyznwVX2upzycJzrEzkexxTlJhLyh3w4V_CM188Fa6UAVijhPYgwddOB2TdE-SdeezUwE=w1416-h658)
 
 <h4>
 Complexity :
