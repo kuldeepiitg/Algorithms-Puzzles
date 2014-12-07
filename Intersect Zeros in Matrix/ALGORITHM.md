@@ -42,7 +42,7 @@ it is intersecting more zeros than the one given by algorithm. That means this r
 zeros left than the one chosen by the greedy algorithm. It is a contradiction that mean no such 
 row/column can exist.
 
-![GitHub Logo](https://lh3.googleusercontent.com/lfHsAlQyznwVX2upzycJzrEzkexxTlJhLyh3w4V_CM188Fa6UAVijhPYgwddOB2TdE-SdeezUwE=w1416-h658)
+![GitHub Logo](https://lh3.googleusercontent.com/vylQl9Npu6H5BdRPBZBsAopmioeHdObllBX4DltbGxlAZL7mjXuMWptjDGr_RsReviMZlrdCCzQ=w1416-h658) 
 
 <h4>
 Complexity :
