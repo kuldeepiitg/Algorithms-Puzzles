@@ -10,7 +10,7 @@ public class Interleaving {
 	/**
 	 * @param first first string
 	 * @param second second string 
-	 * @param interleaved
+	 * @param interleaved 
 	 */
 	public static void print(String first, String second, String interleaved) {
 		
