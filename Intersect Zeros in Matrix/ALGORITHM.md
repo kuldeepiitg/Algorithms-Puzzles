@@ -31,7 +31,7 @@ Pseudo Code :
 <h4>
 Proof of Correctness :
 </h4>
-Greedy Choice : Every time I choose row/column having maximum zeros of remaining matrix.
+Greedy Choice : Every time I choose row/column having maximum zeros of remaining matrix. <br>
 Claim : If in 'n' steps I cut maximum possible zeros then choosing column or row with maximum
 zeros in next step will give me intersection of maximum number of zeros in 'n+1' steps i.e. there is no 
 other row or column that can give me more than this.
