@@ -14,8 +14,17 @@ public class BinarySearch {
 	 */
 	public static int search (int[] array, int key) {
 		
-		int start = 0;
-		int end = array.length - 1;
+		return search(array, key, 0, array.length - 1);
+	}
+	
+	/**
+	 * @param array domain
+	 * @param key key to be searched in subarray of domain.
+	 * @param start first index of subarray
+	 * @param end last index of subarray
+	 * @return index of key in domain array.
+	 */
+	public static int search (int[] array, int key, int start, int end) {
 		
 		while (start <= end) {
 			
