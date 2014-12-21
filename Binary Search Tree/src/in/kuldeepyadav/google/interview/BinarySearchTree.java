@@ -26,6 +26,7 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
 	 * 
 	 * @param values stored in new nodes.
 	 */
+	@SuppressWarnings("unchecked")
 	public void insert(T... values) {
 		for (T value : values) {
 			insert(value);
@@ -66,6 +67,29 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
 				break;
 			}
 		}
+	}
+	
+	@Override
+	public boolean search(T value) {
 		
+		Node<T> ptr = root;
+		
+		while(true) {
+			if(comparator.compare(value, ptr.getValue()) == 0) {
+				return true;
+			} else if (comparator.compare(value, ptr.getValue()) < 0) {
+				if (ptr.getLeft() != null) {
+					ptr = ptr.getLeft();
+				} else {
+					return false;
+				}
+			} else {
+				if (ptr.getRight() != null) {
+					ptr = ptr.getRight();
+				} else {
+				return false;
+				}
+			}
+		}
 	}
 }

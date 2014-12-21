@@ -56,4 +56,42 @@ public class BinaryTree<T> {
 			inOrderTraversal(node.getRight());
 		}
 	}
+	
+	/**
+	 * @param value 
+	 * 			value to be searched.
+	 * @return true if a node exists in tree with given value.
+	 */
+	public boolean search(T value) {
+		return search(root, value);
+	}
+	
+	/**
+	 * @param root
+	 * 			root of subtree, where searching is to be done.
+	 * @param value 
+	 * 			value to be searched
+	 * @return true 
+	 * 			if node with asked value is present in tree.
+	 */
+	private boolean search(Node<T> root, T value) {
+		
+		boolean toReturn = false;
+		if (root.getValue() == value) {
+			toReturn = true;
+		}
+		if (toReturn) {
+			return toReturn;
+		}
+		if (root.getLeft() != null) {
+			toReturn |= search(root.getLeft(), value);
+		}
+		if (toReturn) {
+			return toReturn;
+		}
+		if (root.getRight() != null) {
+			toReturn |= search(root.getRight(), value);
+		}
+		return true;
+	}
 }

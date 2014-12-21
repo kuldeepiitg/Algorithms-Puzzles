@@ -22,6 +22,9 @@ public class BinarySearchTreeTest {
 		binarySearchTree.inOrderTraversal();
 		System.out.println();
 		binarySearchTree.preOrderTraversal();
+		System.out.println();
+		System.out.println(binarySearchTree.search(23));
+		System.out.println(binarySearchTree.search(3));
 	}
 
 }
