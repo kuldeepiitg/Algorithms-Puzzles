@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>/Users/kuldeep/Documents/workspace/Alphabets Order/.ALGORITHM.md.html</title>
+<title>/Users/kuldeep/git/Google-Interviews/Alphabets Order/.ALGORITHM.md.html</title>
 
 
 <style type="text/css">
@@ -460,6 +460,10 @@ function setDocumentScrollTop(ypos)
 <body class="markdown-body">
 <h1> <a id="user-content-alphabet-order" class="anchor" href="#alphabet-order" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alphabet Order</h1> 
 <h3> <a id="user-content-statement-" class="anchor" href="#statement-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Statement : </h3> 
-<p>Set of strings are given in a dictionary order. The problem here is order is not as our alphabetical. It may be different. C may come before a,b, x may come before d,c. etc. You will have to find the order of characters by using given input. (topological sort – complete code is required to write)</p>
+<p>Set of strings are given in a dictionary order. The problem here is order is not as our alphabetical. It may be different. C may come before a,b, x may come before d,c. etc. You will have to find the order of characters by using given input. </p> 
+<h4> <a id="user-content-algorithm-" class="anchor" href="#algorithm-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Algorithm : </h4> 
+<p>Make directed graph which will have characters as nodes. If dictionary contains two consecutive words as aaaax,aaaay then there will be an edge directed from <b>x</b> to <b>y</b>. Now apply topological sort to get the order.</p> 
+<h4> <a id="user-content-complexity-" class="anchor" href="#complexity-" aria-hidden="true"><span class="octicon octicon-link"></span></a> Complexity : </h4> 
+<p>Time : O(n) + O(V) + O(E), where n is number of characters in whole dictionary. V is size of alphabet and E are number of edges in the graph. <br /> |V| &lt;&lt; n, <br /> |E| &lt; n, <br /> so time : O(n) <br /> Space : |V| + |E|</p>
 </body>
 </html>

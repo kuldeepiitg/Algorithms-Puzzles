@@ -1,12 +1,11 @@
 package in.kuldeepyadav.amazon.interview;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,72 +14,106 @@ import java.util.Set;
  * @author kuldeep
  */
 public class Order {
-
-	/**
-	 * Map containing immediate children of a character.
-	 */
-	public HashMap<Character, Set<Character>> children;
 	
 	/**
-	 * Map containing immediate parent element.
+	 * @param dictionary list of all words.
+	 * @return number of distinct characters in all the words of dictionary.
 	 */
-	public HashMap<Character, Character> parents;
-	
-	
-	public  List<Character> alphabetOrder(List<String> dictionary){
+	private Map<Character, Integer> getAlphabetIndex(List<String> dictionary) {
 		
-		List<Character> alphabets = new ArrayList<Character>();
+		Map<Character, Integer> map = new HashMap<Character, Integer>();
+		int counter = 0;
 		
-		for (int i = 1; i < dictionary.size(); i++) {
-			
-			String topString = dictionary.get(i-1);
-			String bottomString = dictionary.get(i);
-			
-			int j = 0;
-			while(j < topString.length() && j < bottomString.length()) {
-				
-				char topChar = topString.charAt(j);
-				char bottomChar = bottomString.charAt(j);
-				if (topChar != bottomChar) {
-					
-					
-					
+		for (String word : dictionary) {
+			for(char character : word.toCharArray()) {
+				if (!map.containsKey(character)) {
+					map.put(character, counter);
+					counter++;
 				}
-				
 			}
-			
 		}
 		
-		return alphabets;
+		return map;
 	}
 	
+	
 	/**
-	 * 
-	 * @param root root of the subtree.
-	 * @param toSearch element to be searched 
-	 * @return true if element is at lower level.
+	 * Get alphabets in ascending order
+	 * @param dictionary set of words
+	 * @return list containing characters in order.
 	 */
-	private  boolean isAtLowerLevel(char root, char toSearch) {
+	@SuppressWarnings("unchecked")
+	public List<Character> getAlphabetInOrder(List<String> dictionary) {
 		
-		Set<Character> set = new HashSet<Character>(Arrays.asList(root));
-		List<Character> queue = new LinkedList<Character>(Arrays.asList(root));
+		Map<Character, Integer> alphabetIndexMap = getAlphabetIndex(dictionary);
 		
-		while(!queue.isEmpty()) {
-			char frontChar = queue.remove(0);
+		// make index to character map
+		char[] indexAlphabetMap = new char[alphabetIndexMap.size()];
+		Iterator<Character> it = alphabetIndexMap.keySet().iterator();
+		while(it.hasNext()) {
+			 char character = (Character) it.next();
+			 int index = alphabetIndexMap.get(character);
+			 indexAlphabetMap[index] = character;
+		}
+		
+		// make directed graph
+		Set<Character>[] graph = new HashSet[alphabetIndexMap.size()];
+		int[] incomingEdgeCounts = new int[alphabetIndexMap.size()];
+		for (int i = 1; i < dictionary.size(); i++) {
+			String firstWord = dictionary.get(i-1);
+			String secondWord = dictionary.get(i);
 			
-			Set<Character> frontCharChildren = children.get(frontChar);
-			for (Character child : frontCharChildren) {
-				if (child == toSearch) {
-					return true;
+			int j = 0;
+			while (j < firstWord.length() && j < secondWord.length()) {
+				char topCharacter = firstWord.charAt(j);
+				char bottomCharacter = secondWord.charAt(j);
+				
+				if (topCharacter != bottomCharacter) {
+					int topCharacterIndex = alphabetIndexMap.get(topCharacter);
+					if (graph[topCharacterIndex] == null) {
+						graph[topCharacterIndex] = new HashSet<Character>();
+					}
+					if (!graph[topCharacterIndex].contains(bottomCharacter)) {
+						graph[topCharacterIndex].add(bottomCharacter);
+
+						int bottomCharacterIndex = alphabetIndexMap
+								.get(bottomCharacter);
+						incomingEdgeCounts[bottomCharacterIndex]++;
+					}
+					break;
 				}
-				if (!set.contains(child)) {
-					set.add(child);
-					queue.add(child);
+				j++;
+			}
+		}
+		
+		// collect nodes in graph with zero incoming edges.
+		List<Integer> zeroIncomingNodes = new LinkedList<Integer>();
+		for (int i = 0; i < incomingEdgeCounts.length; i++) {
+			if (incomingEdgeCounts[i] == 0) {
+				zeroIncomingNodes.add(i);
+			}
+		}
+		
+		// Go on iterating nodes in topological order.
+		List<Character> orderedAlphabet = new LinkedList<Character>();
+		while(!zeroIncomingNodes.isEmpty()) {
+			Integer zeroIncomingNodeIndex = zeroIncomingNodes.remove(0);
+			orderedAlphabet.add(indexAlphabetMap[zeroIncomingNodeIndex]);
+			
+			Set<Character> children = graph[zeroIncomingNodeIndex];
+			if(children == null) {
+				continue;
+			}
+			for (Character child : children) {
+				int childIndex = alphabetIndexMap.get(child);
+				incomingEdgeCounts[childIndex]--;
+				if (incomingEdgeCounts[childIndex] == 0) {
+					zeroIncomingNodes.add(childIndex);
 				}
 			}
 		}
 		
-		return false;
+		return orderedAlphabet;
 	}
 	
 	
