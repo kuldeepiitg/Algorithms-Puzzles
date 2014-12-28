@@ -1,9 +1,16 @@
 package in.kuldeepyadav.google.interview;
 
+import static org.junit.Assert.*;
+
 import java.util.Comparator;
 
 import org.junit.Test;
 
+/**
+ * Junit test for BST.
+ * 
+ * @author kuldeep
+ */
 public class BinarySearchTreeTest {
 
 	@Test
@@ -20,11 +27,38 @@ public class BinarySearchTreeTest {
 		binarySearchTree.insert(8,4,12,10,14,2,6,1,3,5,7);
 		binarySearchTree.insert(11);
 		binarySearchTree.inOrderTraversal();
-		System.out.println();
 		binarySearchTree.preOrderTraversal();
-		System.out.println();
-		System.out.println(binarySearchTree.search(23));
-		System.out.println(binarySearchTree.search(3));
+		assertTrue(binarySearchTree.search(3));
+		assertFalse(binarySearchTree.search(23));
+	}
+	
+	@Test
+	public void testIsBST() {
+		
+		BinaryTree<Integer> binaryTree = new BinarySearchTree<Integer>(new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1-o2;
+			}
+		});
+		((BinarySearchTree<Integer>) binaryTree).insert(8,4,12,10,14,2,6,1,3,5,7,11);
+		
+		BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<Integer>(new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1-o2;
+			}
+		});
+		assertTrue(binarySearchTree.isBST(binaryTree));
+		
+		binaryTree = new BinaryTree<Integer>();
+		binaryTree.insert(1,2,3,4,5,6,7,8,9);
+		binaryTree.insert(10,11);
+		binaryTree.inOrderTraversal();
+		binaryTree.preOrderTraversal();
+		assertFalse(binarySearchTree.isBST(binaryTree));
 	}
 
 }

@@ -1,6 +1,8 @@
 package in.kuldeepyadav.google.interview;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Binary Search tree.
@@ -91,5 +93,60 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @param tree {@link BinaryTree} to be checked.
+	 * @return true if given tree is {@link BinarySearchTree}.
+	 */
+	public boolean isBST(BinaryTree<T> tree) {
+		Map<String, Object> map = isBSTsubTree(tree.root);
+		return (boolean) map.get("bst");
+	}
+	
+	/**
+	 * @param node root {@link Node} of subtree.
+	 * @return true if subtree is a {@link BinarySearchTree}.
+	 */
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> isBSTsubTree(Node<T> node) {
+		Map<String, Object> toReturn = new HashMap<String, Object>();
+		
+		if (node.getLeft() == null && node.getRight() == null) {
+			toReturn.put("bst",true);
+			toReturn.put("min", node.getValue());
+			toReturn.put("max", node.getValue());
+		} else if (node.getLeft() == null) {
+			Map<String, Object> rightMap = isBSTsubTree(node.getRight());
+			if ((boolean) rightMap.get("bst") && comparator.compare((T) rightMap.get("min"), node.getValue()) >= 0) {
+				toReturn.put("bst", true);
+				toReturn.put("min", node.getValue());
+				toReturn.put("max", rightMap.get("max"));
+			} else {
+				toReturn.put("bst", false);
+			}
+		} else if (node.getRight() == null) {
+			Map<String, Object> leftMap = isBSTsubTree(node.getLeft());
+			if ((boolean) leftMap.get("bst") && comparator.compare((T) leftMap.get("max"), node.getValue()) <= 0) {
+				toReturn.put("bst", true);
+				toReturn.put("min", leftMap.get("min"));
+				toReturn.put("max", node.getValue());
+			} else {
+				toReturn.put("bst", false);
+			}
+		} else {
+			Map<String, Object> leftMap = isBSTsubTree(node.getLeft());
+			Map<String, Object> rightMap = isBSTsubTree(node.getRight());
+			if ((boolean) leftMap.get("bst") && (boolean) rightMap.get("bst") &&
+					comparator.compare((T) leftMap.get("max"), node.getValue()) <= 0 &&
+					comparator.compare((T) rightMap.get("min"), node.getValue()) >= 0) {
+				toReturn.put("bst", true);
+				toReturn.put("min", leftMap.get("min"));
+				toReturn.put("max", rightMap.get("max"));
+			} else {
+				toReturn.put("bst", false);
+			}
+		}
+		return toReturn;
 	}
 }

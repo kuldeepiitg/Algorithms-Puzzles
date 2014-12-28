@@ -1,5 +1,8 @@
 package in.kuldeepyadav.google.interview;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * Binary Search Tree.
@@ -14,10 +17,56 @@ public class BinaryTree<T> {
 	protected Node<T> root;
 	
 	/**
+	 * Top queue to help in insertion.
+	 */
+	private List<Node<T>> insertionQueue;
+	
+	/**
+	 * Bottom queue to help in insertion.
+	 */
+	private List<Node<T>> nextInsertionQueue;
+	
+	/**
 	 * Print preorder.
 	 */
 	public void preOrderTraversal(){
 		preOrderTraversal(root);
+		System.out.println();
+	}
+	
+	/**
+	 * Insert new elements into tree keeping it balanced.
+	 * @param elements 
+	 * 		elements to be inserted.
+	 */
+	@SuppressWarnings("unchecked")
+	public void insert(T... elements) {
+		
+		int i = 0;
+		if (root == null) {
+			root = new Node<T>(elements[i]);
+			insertionQueue = new LinkedList<Node<T>>();
+			nextInsertionQueue = new LinkedList<Node<T>>();
+			insertionQueue.add(root);
+			i++;
+		}
+		
+		for ( ;i < elements.length; i++) {
+			Node<T> newNode = new Node<T>(elements[i]);
+			Node<T> queueFront = insertionQueue.get(0);
+			if(queueFront.getLeft() == null) {
+				queueFront.setLeft(newNode);
+			} else {
+				queueFront.setRight(newNode);
+				insertionQueue.remove(0);
+			}
+			nextInsertionQueue.add(newNode);
+			
+			if (insertionQueue.isEmpty()) {
+				insertionQueue = nextInsertionQueue;
+				nextInsertionQueue = new LinkedList<Node<T>>();
+			}
+		}
 	}
 	
 	/**
@@ -40,6 +89,7 @@ public class BinaryTree<T> {
 	 */
 	public void inOrderTraversal() {
 		inOrderTraversal(root);
+		System.out.println();
 	}
 	
 	/**
