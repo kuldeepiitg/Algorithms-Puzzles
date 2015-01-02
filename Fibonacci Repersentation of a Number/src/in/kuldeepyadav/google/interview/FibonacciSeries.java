@@ -36,6 +36,18 @@ public class FibonacciSeries implements Iterator<Integer>{
 	}
 
 	/**
+	 * Previous fibonacci number and take iterator back by one step.
+	 * 
+	 * @return previous fibonacci number.
+	 */
+	public Integer previous() {
+		int previousFibonacci = previousFibonacciNumber;
+		previousFibonacciNumber = secondPreviousFibonacciNumber;
+		secondPreviousFibonacciNumber = previousFibonacci - previousFibonacciNumber;
+		return previousFibonacci;
+	}
+	
+	/**
 	 * @param n index of number in fibonacci series.
 	 * @return nth fibonacci number.
 	 */

@@ -27,7 +27,15 @@ public class FibonacciTest {
 		assertEquals(3, next);
 		next = fibonacciSeries.next();
 		assertEquals(5, next);
-		
+		fibonacciSeries.next();
+		fibonacciSeries.next();
+		fibonacciSeries.next();
+		fibonacciSeries.next();
+		fibonacciSeries.previous();
+		fibonacciSeries.previous();
+		fibonacciSeries.previous();
+		int previous = fibonacciSeries.previous();
+		assertEquals(8, previous);
 	}
 
 	@Test
