@@ -36,7 +36,21 @@ Best(n) = Max(Best(2)+Best(n-2), Best(3)+Best(n-3))
 				Best(1)	= 0
 ```
 				
-Second Approach : <br>
+<h5>
+Complexity :
+</h5>
+Time : O(n) <br>
+Space : O(n)
+
+<h4>
+Second Approach :
+</h4>
 Solve it without using much of space. Just like Fibonacci can be solved two ways. Start from 
 bottom to top.
+
+<h5>
+Complexity :
+</h5>
+Time : O(n) <br>
+Space : O(1)
 				
