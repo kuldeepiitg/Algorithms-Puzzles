@@ -142,6 +142,6 @@ public class BinaryTree<T> {
 		if (root.getRight() != null) {
 			toReturn |= search(root.getRight(), value);
 		}
-		return true;
+		return toReturn;
 	}
 }

@@ -7,6 +7,7 @@ Statement :
 Consider lines of slope -1 passing between nodes (dotted lines in below diagram). 
 Diagonal sum in a binary tree is sum of all node’s data lying between these lines. 
 Given a Binary Tree, print all diagonal sums.
+http://www.geeksforgeeks.org/diagonal-sum-binary-tree/
 
 <h4>
 Algorithm :
