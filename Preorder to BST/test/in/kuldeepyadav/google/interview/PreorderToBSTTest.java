@@ -1,6 +1,5 @@
 package in.kuldeepyadav.google.interview;
 
-import static org.junit.Assert.*;
 import in.kuldeepyadav.google.interview.PreorderToBST.Node;
 
 import org.junit.Test;
