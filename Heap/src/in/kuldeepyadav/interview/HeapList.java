@@ -98,7 +98,7 @@ public class HeapList<E> extends ArrayList<E>{
 			}
 			index = nextLevelIndex;
 		}
-		if(size() - 1 >= START_INDEX) {
+		if(!isEmpty()) {
 			return get(START_INDEX);
 		} else {
 			return null;
@@ -124,5 +124,24 @@ public class HeapList<E> extends ArrayList<E>{
 		@SuppressWarnings("unchecked")
 		HeapList<E> heapCopy = (HeapList<E>) clone();
 		return new HeapIterator<E>(heapCopy);
+	}
+	
+	@Override
+	public boolean isEmpty(){
+		return size() - 1 >= START_INDEX;
+	}
+	
+	/**
+	 * Set key on right place. It is needed to be called after
+	 * key update operation.
+	 * @param index 
+	 * 		index of key
+	 * @return
+	 * 		top(largest) element.
+	 */
+	public E setKeyOnPlace(int index) {
+		dropPebbleFromTop(index);
+		bubbleUpFromBottom(index);
+		return get(START_INDEX);
 	}
 }
