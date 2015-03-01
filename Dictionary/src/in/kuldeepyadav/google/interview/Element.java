@@ -38,6 +38,13 @@ public class Element {
 	public int getWordCount() {
 		return wordCount;
 	}
+	
+	/**
+	 * Set word count.
+	 */
+	public void setWordCount(int wordCount) {
+		this.wordCount = wordCount;
+	}
 
 	/**
 	 * @return the nextNode

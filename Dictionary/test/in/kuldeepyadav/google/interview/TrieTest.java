@@ -18,7 +18,10 @@ public class TrieTest {
 		Trie tire = new Trie(alphabet);
 		tire.insert("box");
 		tire.insert("ox");
-		assertTrue(tire.search("box"));
-		assertFalse(tire.search("lol"));
+		assertTrue(tire.isPresent("box"));
+		assertFalse(tire.isPresent("lol"));
+		tire.delete("box");
+		assertFalse(tire.isPresent("box"));
+		assertTrue(tire.isPresent("ox"));
 	}
 }
