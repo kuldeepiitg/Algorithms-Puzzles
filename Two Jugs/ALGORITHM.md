@@ -6,6 +6,8 @@ Statement :
 </h3>
 Given 2 jugs of capacity a and b gallons, and an infinite supply of water, can you fill one of the jugs with exactly c gallons of water? You can neglect the effects of spillage or residue after each pour, and assume you have infinite time to do the pouring.
 
+http://www.math.tamu.edu/~dallen/hollywood/diehard/diehard.htm
+
 <h4>
 Example :
 </h4>
