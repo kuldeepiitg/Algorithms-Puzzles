@@ -22,3 +22,4 @@ Given two jugs of capacity 5 and 3 liters, get 4 liters of water.<br>
 <h4>
 Algorithm :
 </h4>
+Check if c is divisible by GCD(a,b)
