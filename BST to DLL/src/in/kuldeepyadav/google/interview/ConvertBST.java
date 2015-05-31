@@ -7,10 +7,12 @@ import in.kuldeepyadav.google.interview.ConvertBST.BST.Node;
  * 
  * @author kuldeep
  */
+
+@SuppressWarnings("rawtypes")
 public class ConvertBST {
 
 	/**
-	 * Conver BST to DLL.
+	 * Convert BST to DLL.
 	 * 
 	 * @param bst BST to be converted.
 	 * 
@@ -28,30 +30,30 @@ public class ConvertBST {
 	 * 
 	 * @return {@link Pair} containing start and end nodes.
 	 */
+	
+	@SuppressWarnings("unchecked")
 	private static Pair<Node> convert(Node node) {
 		
 		Pair<Node> leftDLL = null, rightDLL = null;
-		if (node.left != null) {
-			leftDLL = convert(node.left);
+		if (node.getLeft() != null) {
+			leftDLL = convert(node.getLeft());
 		}
-		if (node.right != null) {
-			rightDLL = convert(node.right);
+		if (node.getRight() != null) {
+			rightDLL = convert(node.getRight());
 		}
 		
 		if (leftDLL != null) {
-			leftDLL.second.right = node;
-			node.left = leftDLL.second;
-			leftDLL.second = node;
+			leftDLL.getSecond().setRight(node);;
+			node.setLeft(leftDLL.getSecond());
+			leftDLL.setSecond(node);
 		} else {
-			leftDLL = new Pair<Node>();
-			leftDLL.first = node;
-			leftDLL.second = node;
+			leftDLL = new Pair<Node>(node, node);
 		}
 		
 		if (rightDLL != null) {
-			leftDLL.second.right = rightDLL.first;
-			rightDLL.first.left = leftDLL.second;
-			leftDLL.second = rightDLL.second;
+			leftDLL.getSecond().setRight(rightDLL.getFirst());
+			rightDLL.getFirst().setLeft(leftDLL.getSecond());
+			leftDLL.setSecond(rightDLL.getSecond());
 		}
 		return leftDLL;
 	}
@@ -65,9 +67,44 @@ public class ConvertBST {
 	 */
 	public static class Pair<T> {
 		
-		public T first;
+		private T first;
 		
-		public T second;
+		private T second;
+
+		public Pair(T first, T second) {
+			super();
+			this.first = first;
+			this.second = second;
+		}
+		
+		/**
+		 * @return the first
+		 */
+		public T getFirst() {
+			return first;
+		}
+
+		/**
+		 * @return the second
+		 */
+		public T getSecond() {
+			return second;
+		}
+
+		/**
+		 * @param first the first to set
+		 */
+		public void setFirst(T first) {
+			this.first = first;
+		}
+
+		/**
+		 * @param second the second to set
+		 */
+		public void setSecond(T second) {
+			this.second = second;
+		}
+		
 	}
 	
 	/**
@@ -75,20 +112,20 @@ public class ConvertBST {
 	 * 
 	 * @author kuldeep
 	 */
-	public static class BST {
+	public static class BST<E extends Comparable<E>> {
 		
 		/**
 		 * The root Node.
 		 */
-		Node root;
+		Node<E> root;
 		
 		/**
 		 * Insert new node in tree.
 		 * 
 		 * @param value value of new node to be inserted.
 		 */
-		public void insert(int value) {
-			Node newNode = new Node(value);
+		public void insert(E value) {
+			Node<E> newNode = new Node<E>(value);
 			insert(newNode);
 		}
 		
@@ -97,24 +134,25 @@ public class ConvertBST {
 		 * 
 		 * @param newNode node to be inserted.
 		 */
-		public void insert(Node newNode) {
+		public void insert(Node<E> newNode) {
 			if (root == null) {
 				root = newNode;
 			} else {
 				
-				Node ptr = root;
-				while(true) {
-					if (newNode.value > ptr.value && ptr.right != null) {
-						ptr = ptr.right;
-					} else if (newNode.value < ptr.value && ptr.left != null) {
-						ptr = ptr.left;
-					} else if (newNode.value > ptr.value) {
-						ptr.right = newNode;
+				Node<E> ptr = root;
+				
+				while (true){
+					if (newNode.getValue().compareTo(ptr.getValue()) > 0 && ptr.getRight() != null) {
+						ptr = ptr.getRight();
+					} else if (newNode.getValue().compareTo(ptr.getValue()) < 0 && ptr.getLeft() != null) {
+						ptr = ptr.getLeft();
+					} else if (newNode.getValue().compareTo(ptr.getValue()) > 0) {
+						ptr.setRight(newNode);
 						return;
-					} else if (newNode.value < ptr.value) {
-						ptr.left = newNode;
+					} else if (newNode.getValue().compareTo(ptr.getValue()) < 0) {
+						ptr.setLeft(newNode);
 						return;
-					} else if (newNode.value == ptr.value) {
+					} else if (newNode.getValue().compareTo(ptr.getValue()) == 0) {
 						throw new RuntimeException("Numbers should be distinct");
 					}
 				}
@@ -124,14 +162,14 @@ public class ConvertBST {
 		/**
 		 * Traverse BST in Inorder fashion.
 		 */
-		private void traverseInorder(Node ptr) {
+		private void traverseInorder(Node<E> ptr) {
 			
-			if (ptr.left != null) {
-				traverseInorder(ptr.left);
+			if (ptr.getLeft() != null) {
+				traverseInorder(ptr.getLeft());
 			}
-			System.out.println(ptr.value);
-			if (ptr.right != null) {
-				traverseInorder(ptr.right);
+			System.out.println(ptr.getValue());
+			if (ptr.getRight() != null) {
+				traverseInorder(ptr.getRight());
 			}
 		}
 		
@@ -147,14 +185,14 @@ public class ConvertBST {
 		 * 
 		 * @param ptr root of subtree.
 		 */
-		private void traversePreorder(Node ptr){
+		private void traversePreorder(Node<E> ptr){
 			
-			System.out.println(ptr.value);
-			if (ptr.left != null) {
-				traversePreorder(ptr.left);
+			System.out.println(ptr.getValue());
+			if (ptr.getLeft() != null) {
+				traversePreorder(ptr.getLeft());
 			}
-			if (ptr.right != null) {
-				traversePreorder(ptr.right);
+			if (ptr.getRight() != null) {
+				traversePreorder(ptr.getRight());
 			}
 		}
 		
@@ -170,27 +208,64 @@ public class ConvertBST {
 		 * 
 		 * @author kuldeep
 		 */
-		public class Node {
+		@SuppressWarnings("hiding")
+		public class Node<E extends Comparable<E>> {
 			
 			/**
 			 * Value stored.
 			 */
-			public int value;
+			private E value;
 			
 			/**
 			 * Left child.
 			 */
-			public Node left;
+			private Node<E> left;
 			
 			/**
 			 * Right child.
 			 */
-			public Node right;
+			private Node<E> right;
 
-			public Node(int value) {
+			public Node(E value) {
 				super();
 				this.value = value;
 			}
+
+			/**
+			 * @return the value
+			 */
+			public E getValue() {
+				return value;
+			}
+
+			/**
+			 * @return the left
+			 */
+			public Node<E> getLeft() {
+				return left;
+			}
+
+			/**
+			 * @return the right
+			 */
+			public Node<E> getRight() {
+				return right;
+			}
+
+			/**
+			 * @param left the left to set
+			 */
+			public void setLeft(Node<E> left) {
+				this.left = left;
+			}
+
+			/**
+			 * @param right the right to set
+			 */
+			public void setRight(Node<E> right) {
+				this.right = right;
+			}
+			
 		}
 	}
 }

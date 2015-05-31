@@ -13,9 +13,11 @@ import org.junit.Test;
  */
 public class ConvertTest {
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void test() {
 		
+		@SuppressWarnings("rawtypes")
 		BST bst = new BST();
 		
 		bst.insert(4);
@@ -26,24 +28,25 @@ public class ConvertTest {
 		bst.insert(5);
 		bst.insert(7);
 		
-//		bst.traverseInorder();
-//		System.out.println();
-//		bst.traversePreorder();
-//		System.out.println();
+		bst.traverseInorder();
+		System.out.println();
+		bst.traversePreorder();
+		System.out.println();
 		
+		@SuppressWarnings("rawtypes")
 		Node root = ConvertBST.convert(bst);
 		while(root != null) {
-			System.out.println(root.value);
+			System.out.println(root.getValue());
 			
-			if (root.right == null) {
+			if (root.getRight() == null) {
 				break;
 			}
-			root = root.right;
+			root = root.getRight();
 		}
 		System.out.println();
 		while (root != null) {
-			System.out.println(root.value);
-			root = root.left;
+			System.out.println(root.getValue());
+			root = root.getLeft();
 		}
 		
 	}
