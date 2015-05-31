@@ -3,6 +3,7 @@ package in.kuldeepyadav.google.interview;
 import static org.junit.Assert.*;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -30,6 +31,12 @@ public class BinarySearchTreeTest {
 		binarySearchTree.preOrderTraversal();
 		assertTrue(binarySearchTree.search(3));
 		assertFalse(binarySearchTree.search(23));
+		
+		Iterator<Integer> itr = binarySearchTree.preorderIterator();
+		while (itr.hasNext()) {
+			Integer integer = (Integer) itr.next();
+			System.out.println(integer);
+		}
 	}
 	
 	@Test

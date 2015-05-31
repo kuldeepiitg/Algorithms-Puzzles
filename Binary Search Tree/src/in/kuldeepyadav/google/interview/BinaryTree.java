@@ -1,7 +1,9 @@
 package in.kuldeepyadav.google.interview;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 
 /**
@@ -72,7 +74,7 @@ public class BinaryTree<T> {
 	/**
 	 * @param node root of subtree whose preorder is to be printed.
 	 */
-	private void preOrderTraversal(Node<T> node){
+	private void preOrderTraversal(Node<T> node) {
 		if (node != null) {
 			System.out.print(node.getValue() + ", ");
 		}
@@ -143,5 +145,111 @@ public class BinaryTree<T> {
 			toReturn |= search(root.getRight(), value);
 		}
 		return toReturn;
+	}
+	
+	/**
+	 * @return {@link Iterator} which traverses the tree in preorder.
+	 */
+	public Iterator<T> preorderIterator(){
+		
+		return new PreorderIterator(root);
+	}
+	
+	/**
+	 * Preorder traversal iterator.
+	 * @author kuldeep
+	 */
+	public class PreorderIterator implements Iterator<T> {
+		
+		private Stack<NodeSide> stack;
+		
+		public PreorderIterator(Node<T> node) {
+			super();
+			this.stack = new Stack<NodeSide>();
+			this.stack.push(new NodeSide(node, Side.NONE));
+		}
+
+		@Override
+		public boolean hasNext() {
+			return !stack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			
+			Node<T> node = stack.peek().getNode();
+			T toReturn = node.getValue();
+			
+			if(node.getLeft() != null) {
+				stack.push(new NodeSide(node.getLeft(), Side.LEFT));
+				return toReturn;
+			}
+			
+			if (node.getRight() != null) {
+				stack.push(new NodeSide(node.getRight(), Side.RIGHT));
+				return toReturn;
+			}
+			
+			while(!stack.isEmpty()) {
+				NodeSide nodeSide = stack.pop();
+				if(nodeSide.getSide().equals(Side.LEFT)) {
+					node = stack.peek().getNode();
+					if(node.getRight() != null) {
+						stack.push(new NodeSide(node.getRight(), Side.RIGHT));
+						return toReturn;
+					}
+				}
+			}
+			
+			return toReturn;
+		}
+
+	}
+	
+	/**
+	 * Node and side.
+	 * 
+	 * @author kuldeep
+	 */
+	private class NodeSide {
+		
+		/**
+		 * BST node
+		 */
+		private Node<T> node;
+		
+		/**
+		 * Side in which node falls from parent
+		 */
+		private Side side;
+
+		public NodeSide(Node<T> node, Side side) {
+			super();
+			this.node = node;
+			this.side = side;
+		}
+
+		/**
+		 * @return the node
+		 */
+		public Node<T> getNode() {
+			return node;
+		}
+
+		/**
+		 * @return the side
+		 */
+		public Side getSide() {
+			return side;
+		}
+	}
+	
+	/**
+	 * Side of child to parent.
+	 * 
+	 * @author kuldeep
+	 */
+	private enum Side {
+		LEFT, RIGHT, NONE
 	}
 }
