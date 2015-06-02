@@ -159,14 +159,19 @@ public class BinaryTree<T> {
 	 * Preorder traversal iterator.
 	 * @author kuldeep
 	 */
-	public class PreorderIterator implements Iterator<T> {
+	private class PreorderIterator implements Iterator<T> {
 		
-		private Stack<NodeSide> stack;
+		/**
+		 * Stack to fake recursion
+		 */
+		private Stack<NodeInStack> stack;
 		
 		public PreorderIterator(Node<T> node) {
 			super();
-			this.stack = new Stack<NodeSide>();
-			this.stack.push(new NodeSide(node, Side.NONE));
+			this.stack = new Stack<NodeInStack>();
+			if(node != null) {
+				stack.push(new NodeInStack(node, false, false));
+			}
 		}
 
 		@Override
@@ -177,41 +182,192 @@ public class BinaryTree<T> {
 		@Override
 		public T next() {
 			
-			Node<T> node = stack.peek().getNode();
-			T toReturn = node.getValue();
-			
-			if(node.getLeft() != null) {
-				stack.push(new NodeSide(node.getLeft(), Side.LEFT));
-				return toReturn;
+			BinaryTree<T>.NodeInStack topNodeInStack = stack.peek();
+			setNext();
+			return topNodeInStack.getNode().getValue();
+		}
+		
+		/**
+		 * Set next node at top of stack to be visited for preorder.
+		 */
+		private void setNext(){
+			while (!stack.isEmpty()) {
+				NodeInStack topNodeInStack = stack.peek();
+				
+				if (!topNodeInStack.hasVisitedLeft()) {
+					topNodeInStack.setHasVisitedLeft(true);
+					Node<T> node = topNodeInStack.getNode();
+					if (node.getLeft() != null) {
+						stack.push(new NodeInStack(node.getLeft(), false, false));
+						return;
+					}
+				}
+				
+				if (!topNodeInStack.hasVisitedRight()) {
+					topNodeInStack.setHasVisitedRight(true);
+					Node<T> node = topNodeInStack.getNode();
+					if (node.getRight() != null) {
+						stack.push(new NodeInStack(node.getRight(), false, false));
+						return;
+					}
+				}
+				
+				stack.pop();
 			}
+		}
+
+	}
+	
+	/**
+	 * @return {@link Iterator} traversing tree inorderly.
+	 */
+	public Iterator<T> inorderIterator() {
+		return new InorderIterator(root);
+	}
+	
+	/**
+	 * Iterator traversing tree inorderly.
+	 * 
+	 * @author kuldeep
+	 */
+	private class InorderIterator implements Iterator<T> {
+		
+		private Stack<NodeInStack> stack;
+
+		public InorderIterator(Node<T> root) {
+			this.stack = new Stack<NodeInStack>();
+			this.stack.push(new NodeInStack(root, false, false));
+			setNextNode();
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return !stack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			NodeInStack topNodeInStack = stack.peek();
+			setNextNode();
+			return topNodeInStack.getNode().getValue();
+		}
+		
+		/**
+		 * Set next node in stack to return
+		 */
+		private void setNextNode() {
 			
-			if (node.getRight() != null) {
-				stack.push(new NodeSide(node.getRight(), Side.RIGHT));
-				return toReturn;
-			}
-			
-			while(!stack.isEmpty()) {
-				NodeSide nodeSide = stack.pop();
-				if(nodeSide.getSide().equals(Side.LEFT)) {
-					node = stack.peek().getNode();
-					if(node.getRight() != null) {
-						stack.push(new NodeSide(node.getRight(), Side.RIGHT));
-						return toReturn;
+			while (!stack.isEmpty()) {
+				
+				NodeInStack topNodeInStack = stack.peek();
+				if(!topNodeInStack.hasVisitedLeft()) {
+					topNodeInStack.setHasVisitedLeft(true);
+					Node<T> node = topNodeInStack.getNode();
+					if (node.getLeft() != null) {
+						stack.push(new NodeInStack(node.getLeft(), false, false));
+						continue;
+					} else {
+						break;
+					}
+				}
+				
+				if(!topNodeInStack.hasVisitedRight()) {
+					topNodeInStack.setHasVisitedRight(true);
+					Node<T> node = topNodeInStack.getNode();
+					stack.pop();
+					if (node.getRight() != null) {
+						stack.push(new NodeInStack(node.getRight(), false, false));
+						continue;
+					} else {
+						break;
 					}
 				}
 			}
 			
-			return toReturn;
+			return;
+		}
+		
+	}
+	
+	/**
+	 * @return {@link PostorderIterator}
+	 */
+	public Iterator<T> postorderIterator(){
+		return new PostorderIterator(root);
+	}
+	
+	/**
+	 * {@link Iterator} traversing the tree postorderly.
+	 * 
+	 * @author kuldeep
+	 */
+	private class PostorderIterator implements Iterator<T> {
+
+		private Stack<NodeInStack> stack;
+		
+		public PostorderIterator(Node<T> root) {
+			super();
+			this.stack = new Stack<BinaryTree<T>.NodeInStack>();
+			stack.push(new NodeInStack(root, false, false));
+			setNextNode();
 		}
 
+		@Override
+		public boolean hasNext() {
+			return !stack.isEmpty();
+		}
+
+		@Override
+		public T next() {
+			
+			NodeInStack topNodeInStack = stack.peek();
+			setNextNode();
+			return topNodeInStack.getNode().getValue();
+		}
+		
+		/**
+		 * Set next node on top of stack
+		 */
+		private void setNextNode(){
+			
+			NodeInStack topNodeInStack = stack.peek();
+			if (topNodeInStack.hasVisitedLeft() && topNodeInStack.hasVisitedRight()) {
+				stack.pop();
+			}
+			
+			while(!stack.isEmpty()) {
+				topNodeInStack = stack.peek();
+				
+				Node<T> node = topNodeInStack.getNode();
+				if (!topNodeInStack.hasVisitedLeft()) {
+					topNodeInStack.setHasVisitedLeft(true);
+					if(node.getLeft() != null) {
+						stack.push(new NodeInStack(node.getLeft(), false, false));
+						continue;
+					}
+				}
+				
+				if (!topNodeInStack.hasVisitedRight()) {
+					topNodeInStack.setHasVisitedRight(true);
+					if (node.getRight() != null) {
+						stack.push(new NodeInStack(node.getRight(), false, false));
+						continue;
+					}
+				}
+				
+				break;
+			}
+		}
+		
 	}
+	
 	
 	/**
 	 * Node and side.
 	 * 
 	 * @author kuldeep
 	 */
-	private class NodeSide {
+	private class NodeInStack {
 		
 		/**
 		 * BST node
@@ -219,14 +375,20 @@ public class BinaryTree<T> {
 		private Node<T> node;
 		
 		/**
-		 * Side in which node falls from parent
+		 * true if left child node have been visited
 		 */
-		private Side side;
-
-		public NodeSide(Node<T> node, Side side) {
+		private boolean hasVisitedLeft;
+		
+		/**
+		 * true if right child node have been visited
+		 */
+		private boolean hasVisitedRight;
+		
+		public NodeInStack(Node<T> node, boolean hasVisitedLeft, boolean hasVisitedRight) {
 			super();
 			this.node = node;
-			this.side = side;
+			this.hasVisitedLeft = hasVisitedLeft;
+			this.hasVisitedRight = hasVisitedRight;
 		}
 
 		/**
@@ -237,19 +399,32 @@ public class BinaryTree<T> {
 		}
 
 		/**
-		 * @return the side
+		 * @return true if left child have been visited
 		 */
-		public Side getSide() {
-			return side;
+		public boolean hasVisitedLeft() {
+			return hasVisitedLeft;
+		}
+
+		/**
+		 * @return true if right child have been visited
+		 */
+		public boolean hasVisitedRight() {
+			return hasVisitedRight;
+		}
+		
+		/**
+		 * @param hasVisitedLeft the hasVisitedLeft to set
+		 */
+		public void setHasVisitedLeft(boolean hasVisitedLeft) {
+			this.hasVisitedLeft = hasVisitedLeft;
+		}
+
+		/**
+		 * @param hasVisitedRight the hasVisitedRight to set
+		 */
+		public void setHasVisitedRight(boolean hasVisitedRight) {
+			this.hasVisitedRight = hasVisitedRight;
 		}
 	}
 	
-	/**
-	 * Side of child to parent.
-	 * 
-	 * @author kuldeep
-	 */
-	private enum Side {
-		LEFT, RIGHT, NONE
-	}
 }
