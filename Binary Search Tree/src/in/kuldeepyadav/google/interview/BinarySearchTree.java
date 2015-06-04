@@ -22,7 +22,43 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
 		super();
 		this.comparator = comparator;
 	}
+	
+	public BinarySearchTree(Comparator<T> comparator, T[] array) {
+		this(comparator);
+		this.root = arrayToTree(array, 0, array.length-1);
+	}
 
+	/**
+	 * Sorted array to {@link BinarySearchTree} in linear time.
+	 * 
+	 * @param array
+	 * 		sorted array
+	 * @param start
+	 *		start of subarray which is to be converted to BST
+	 * @param end
+	 *      end of subarray which is to be converted to BST
+	 * @return root node of {@link BinarySearchTree}
+	 */
+	private Node<T> arrayToTree(T[] array, int start, int end) {
+		
+		if (start == end) {
+			return new Node<T>(array[start]);
+		}
+		
+		int mid = (start + end)/2;
+		Node<T> root = new Node<T>(array[mid]);
+		
+		if (mid > start) {
+			root.setLeft(arrayToTree(array, start, mid-1));
+		}
+		
+		if (mid < end) {
+			root.setRight(arrayToTree(array, mid+1, end));
+		}
+		
+		return root;
+	}
+	
 	/**
 	 * Insert new nodes in tree.
 	 * 

@@ -99,4 +99,27 @@ public class BinarySearchTreeTest {
 		assertFalse(binarySearchTree.isBST(binaryTree));
 	}
 
+	@Test
+	public void testArrayToTree(){
+		
+		Comparator<Integer> comparator = new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1-o2;
+			}
+		};
+		
+		Integer[] sortedArray = new Integer[]{1,2,3,4,5,6,7};
+		BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<Integer>(comparator, sortedArray);
+		
+		Iterator<Integer> itr = binarySearchTree.inorderIterator();
+		List<Integer> outputInorder = new ArrayList<Integer>();
+		while (itr.hasNext()) {
+			Integer integer = (Integer) itr.next();
+			outputInorder.add(integer);
+		}
+		assertArrayEquals(ArrayUtils.toPrimitive(sortedArray), ArrayUtils.toPrimitive(outputInorder.toArray(new Integer[0])));
+	}
+	
 }
