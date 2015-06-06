@@ -7,7 +7,7 @@ import java.util.Stack;
 
 
 /**
- * Binary Search Tree.
+ * Binary Tree.
  * 
  * @author kuldeep
  */
@@ -27,6 +27,22 @@ public class BinaryTree<T> {
 	 * Bottom queue to help in insertion.
 	 */
 	private List<Node<T>> nextInsertionQueue;
+	
+	public BinaryTree(Node<T> root) {
+		super();
+		this.root = root;
+	}
+
+	public BinaryTree(){
+		super();
+	}
+	
+	/**
+	 * @return root element of tree
+	 */
+	public Node<T> getRoot(){
+		return root;
+	}
 	
 	/**
 	 * Print preorder.
