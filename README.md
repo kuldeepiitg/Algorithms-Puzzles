@@ -1,4 +1,4 @@
 Google-Interviews
 =================
 
-Solution to few problems asked in google interview
+Solution to usual problems they ask in interview. And yeah some of them are asked in Google too.
