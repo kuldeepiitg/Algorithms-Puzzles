@@ -1,6 +1,6 @@
-Median of two sorted arrays
-==========================
-Find median of two sorted arrays.
+Median of two Equal Size Sorted Arrays
+======================================
+Find median of two equal size sorted arrays.
 
 <h3>
 Statement :
