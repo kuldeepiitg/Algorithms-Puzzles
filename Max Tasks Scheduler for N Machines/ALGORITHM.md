@@ -13,7 +13,10 @@ Idea :
 Take first processor, and apply schedule task finishing first strategy.
 Apply same for second processor on remaining unscheduled tasks.
 
-<h4>
-Note :
-</h4>
-Proof of correctness is yet to be figured out. Scrutinize and write algorithm details for it.
+It won't work. Counter example.
+
+In given figure, clearly two processors are sufficient to finish all.
+But with our strategy task 2 will go unexecuted. Processor 1 will pick task 1 and 4.
+Processor will pick only 3, not 2 because it is overlapping with 3.
+
+![alt tag](https://raw.githubusercontent.com/kuldeepiitg/Google-Interviews/master/Max%20Tasks%20Scheduler%20for%20N%20Machines/images/Max%20tasks%20using%20N%20machines.jpg)
