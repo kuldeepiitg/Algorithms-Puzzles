@@ -109,23 +109,32 @@ public class BinarySearchTree<T> extends BinaryTree<T> {
 	
 	@Override
 	public boolean search(T value) {
-		
+		return searchNode(value) != null;
+	}
+	
+	/**
+	 * @param value
+	 * 		value to searched
+	 * @return the node which have value
+	 */
+	public Node<T> searchNode(T value){
+
 		Node<T> ptr = root;
 		
 		while(true) {
 			if(comparator.compare(value, ptr.getValue()) == 0) {
-				return true;
+				return ptr;
 			} else if (comparator.compare(value, ptr.getValue()) < 0) {
 				if (ptr.getLeft() != null) {
 					ptr = ptr.getLeft();
 				} else {
-					return false;
+					return null;
 				}
 			} else {
 				if (ptr.getRight() != null) {
 					ptr = ptr.getRight();
 				} else {
-				return false;
+					return null;
 				}
 			}
 		}
