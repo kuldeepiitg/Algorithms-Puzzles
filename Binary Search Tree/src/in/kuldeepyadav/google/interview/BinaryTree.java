@@ -131,36 +131,42 @@ public class BinaryTree<T> {
 	 * @return true if a node exists in tree with given value.
 	 */
 	public boolean search(T value) {
-		return search(root, value);
+		return searchNode(value) != null;
+	}
+	
+	/**
+	 * @param value
+	 * 		value to be searched
+	 * @return tree {@link Node} containing the value
+	 */
+	public Node<T> searchNode(T value) {
+		return searchNode(root, value);
 	}
 	
 	/**
 	 * @param root
-	 * 			root of subtree, where searching is to be done.
-	 * @param value 
-	 * 			value to be searched
-	 * @return true 
-	 * 			if node with asked value is present in tree.
+	 * 		root node of the tree
+	 * @param value
+	 * 		value to be searched
+	 * @return tree {@link Node} containing the value 
 	 */
-	private boolean search(Node<T> root, T value) {
-		
-		boolean toReturn = false;
+	private Node<T> searchNode(Node<T> root, T value) {
 		if (root.getValue() == value) {
-			toReturn = true;
-		}
-		if (toReturn) {
-			return toReturn;
+			return root;
 		}
 		if (root.getLeft() != null) {
-			toReturn |= search(root.getLeft(), value);
-		}
-		if (toReturn) {
-			return toReturn;
+			Node<T> node = searchNode(root.getLeft(), value);
+			if (node != null) {
+				return node;
+			}
 		}
 		if (root.getRight() != null) {
-			toReturn |= search(root.getRight(), value);
+			Node<T> node = searchNode(root.getRight(), value);
+			if (node != null) {
+				return node;
+			}
 		}
-		return toReturn;
+		return null;
 	}
 	
 	/**
