@@ -37,4 +37,4 @@ For each cell in matrix(ocean) :
 Complexity :
 </h4>
 Time : each cell will be touched atmost 6 times, so O(n) <br>
-Space : O(1)
+Space : O(1) 
