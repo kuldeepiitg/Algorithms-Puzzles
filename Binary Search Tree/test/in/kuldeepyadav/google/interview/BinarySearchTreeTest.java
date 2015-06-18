@@ -122,4 +122,22 @@ public class BinarySearchTreeTest {
 		assertArrayEquals(ArrayUtils.toPrimitive(sortedArray), ArrayUtils.toPrimitive(outputInorder.toArray(new Integer[0])));
 	}
 	
+	@Test
+	public void testLeftView(){
+		Comparator<Integer> comparator = new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1-o2;
+			}
+		};
+		BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>(comparator);
+		tree.insert(5,2,9,1,4,6,10,3,7,8);
+		List<Integer> view = tree.leftView();
+		
+		int[] expectedOutput = new int[]{5,2,1,3,8};
+		int[] outputArray = ArrayUtils.toPrimitive(view.toArray(new Integer[0]));
+		assertArrayEquals(expectedOutput, outputArray);
+	}
+	
 }

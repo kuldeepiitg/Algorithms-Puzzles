@@ -1,5 +1,6 @@
 package in.kuldeepyadav.google.interview;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -447,6 +448,40 @@ public class BinaryTree<T> {
 		public void setHasVisitedRight(boolean hasVisitedRight) {
 			this.hasVisitedRight = hasVisitedRight;
 		}
+	}
+	
+	/**
+	 * @return list containing elements visible from left side of tree.
+	 */
+	public List<T> leftView() {
+		
+		List<T> view = new ArrayList<T>();
+		leftView(root, 0, view);
+		return view;
+	}
+	
+	/**
+	 * @param root
+	 * 			root of subtree
+	 * @param depth
+	 * 			depth of root of subtree
+	 * @param view
+	 * 			view to be updated if any node 
+	 * 			of subtree is visible from left
+	 */
+	private void leftView(Node<T> root, int depth, List<T> view) {
+		
+		if (depth >= view.size()) {
+			view.add(root.getValue());
+		}
+		depth++;
+		if (root.getLeft() != null) {
+			leftView(root.getLeft(), depth, view);
+		}
+		if (root.getRight() != null) {
+			leftView(root.getRight(), depth, view);
+		}
+		depth--;
 	}
 	
 }
