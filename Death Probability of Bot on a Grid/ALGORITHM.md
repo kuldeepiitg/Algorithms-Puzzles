@@ -18,3 +18,8 @@ Data Structures :
 </h4>
 3-D array with dimensions <b>l</b>x<b>b</b>x<b>n</b>. It is a cube where depth <b>k</b> will have probabilities of getting killed with battery <b>k</b>.
 
+<h3>
+Complexity :
+</h3>
+Time : O(l.b.n) <br>
+Space : O(l.b.n)
