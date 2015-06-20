@@ -27,7 +27,7 @@ For each index from 0 to n :
 				decrease element at index by 1,
 				break,
 		
-Iterate over array to find smallest index that have negative value, return index
+Iterate over array to find smallest index that have negative value less than -1, return index
 
 ```	
 
