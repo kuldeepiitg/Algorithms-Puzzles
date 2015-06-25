@@ -78,7 +78,7 @@ public class ArrayUtils {
 			array[i] = 0;
 			while (true) {
 				int temp = array[elementInHand];
-				if (temp <= 0) {
+				if (temp < 0 || (temp == 0 && elementInHand <= i)) {
 					array[elementInHand] -= 1;
 					break;
 				} else {
@@ -121,11 +121,11 @@ public class ArrayUtils {
 		outerloop:
 		for (int i = array.length - 1; i>= 0; i--) {
 			
-			if (array[i] >= 0) continue;
+			if (array[i] > 0) continue;
 			
 			while (lastNegative >= i || array[lastNegative] >= 0) {
 				lastNegative--;
-				if (lastNegative <= 0) break outerloop;
+				if (lastNegative < 0) break outerloop;
 			}
 			count++;
 			count += array[i];
