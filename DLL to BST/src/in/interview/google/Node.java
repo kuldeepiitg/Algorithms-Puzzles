@@ -5,7 +5,7 @@ package in.interview.google;
  * 
  * @author kuldeep
  */
-public class Node<E extends Comparable<E>> {
+public class Node<E> {
 
 	/**
 	 * Value contained in node.

@@ -7,7 +7,7 @@ import java.util.Iterator;
  * 
  * @author kuldeep
  */
-public class DoublyLinkedList<E extends Comparable<E>> {
+public class DoublyLinkedList<E> {
 
 	/**
 	 * Head node of the list.
@@ -47,7 +47,7 @@ public class DoublyLinkedList<E extends Comparable<E>> {
 	/**
 	 * @return {@link Iterator} over linked list
 	 */
-	public Iterator<E> iterator(){
+	public Iterator<E> iterator() {
 		
 		return new Iterator<E>() {
 
@@ -67,4 +67,55 @@ public class DoublyLinkedList<E extends Comparable<E>> {
 			
 		};
 	}
+	
+	/**
+	 * Remove the node from list.
+	 * 
+	 * @param node
+	 * 			node to be removed from list
+	 */
+	public void remove (Node<E> node) {
+		
+		if (node.getNext() != null) {
+			node.getNext().setPrevious(node.getPrevious());
+		}
+		
+		if (node.getPrevious() != null) {
+			node.getPrevious().setNext(node.getNext());
+		}
+		
+		if (head == node) {
+			head = node.getNext();
+		}
+		
+		if (tail == node) {
+			tail = node.getPrevious();
+		}
+		
+		return;
+	}
+	
+	/**
+	 * Insert node at the beginning of the list.
+	 * 
+	 * @param node
+	 * 			node to be inserted.
+	 */
+	public void addFirst (Node<E> node) {
+		node.setNext(head);
+		head.setPrevious(node);
+		head = node;
+	}
+	
+	/**
+	 * Remove last node from list.
+	 * 
+	 * @return last node that is just removed.
+	 */
+	public Node<E> removeLast () {
+		Node<E> toReturn = tail;
+		remove(tail);
+		return toReturn;
+	}
+	
 }
