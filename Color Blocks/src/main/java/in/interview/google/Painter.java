@@ -12,15 +12,9 @@ public class Painter {
 	 */
 	private int blocksCount;
 	
-	/**
-	 * Count of configurations for blocks count from 0 to blocksCount
-	 */
-	private TwoBlocks[] permutations;
-	
 	public Painter(int blocksCount) {
 		super();
 		this.blocksCount = blocksCount;
-		this.permutations = new TwoBlocks[blocksCount + 1];
 	}
 
 	/**
@@ -44,10 +38,6 @@ public class Painter {
 	 */
 	private TwoBlocks colorBlocks(int n) {
 		
-		if (permutations[n] != null) {
-			return permutations[n];
-		}
-		
 		if (n == 1 || n == 0) {
 			return new TwoBlocks(0, 0, 0, 0);
 		} else if (n == 2) {
@@ -55,11 +45,10 @@ public class Painter {
 		}
 		
 		TwoBlocks permutationsForNminusOne = colorBlocks(n-1);
-		permutations[n] = new TwoBlocks(permutationsForNminusOne.getBR(),
+		return new TwoBlocks(permutationsForNminusOne.getBR(),
 				permutationsForNminusOne.getRR() + permutationsForNminusOne.getBR(),
 				permutationsForNminusOne.getRB() + permutationsForNminusOne.getBB(), 
 				permutationsForNminusOne.getRB());
-		return permutations[n];
 	}
 	
 	
