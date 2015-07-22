@@ -59,6 +59,44 @@ public class Painter {
 
 		return new TwoBlocks(rr, rb, br, bb);
 	}
+	
+
+	/**
+	 * @return count of possible configurations, such that at max two blocks are
+	 *         painted with same color.
+	 */
+	public int colorBlocksEfficient(){
+		
+		if (blocksCount == 0) {
+			return 0;
+		} else if (blocksCount == 1) {
+			return 2;
+		} else {
+			return colorBlocksEfficient(blocksCount).getAllPossible();
+		}
+
+	}
+	
+	/**
+	 * @param n
+	 *            count of blocks
+	 * @return count of possible configurations, such that at max two blocks are
+	 *         with same color.
+	 */
+	private TwoBlocks colorBlocksEfficient(int n) {
+		
+		if (n == 1 || n == 0) {
+			return new TwoBlocks(0, 0, 0, 0);
+		} else if (n == 2) {
+			return new TwoBlocks(1, 1, 1, 1);
+		}
+		
+		return new TwoBlocks(
+				Fibonacci.number(n-1),
+				Fibonacci.number(n),
+				Fibonacci.number(n),
+				Fibonacci.number(n-1));
+	}
 
 	/**
 	 * Configuration where last two blocks can be RR : red, red RB : red, black
