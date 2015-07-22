@@ -19,6 +19,7 @@ public class PainterTest {
 		assertEquals(4, (new Painter(2)).colorBlocks());
 		assertEquals(6, (new Painter(3)).colorBlocks());
 		assertEquals(10, (new Painter(4)).colorBlocks());
+		assertEquals(110, (new Painter(9)).colorBlocks());
 		(new Painter(100)).colorBlocks();
 	}
 }
