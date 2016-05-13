@@ -81,10 +81,13 @@ public class SuffixTree {
 
                     // Crop input because substring from beginning to this
                     // point is matching, and we need to look for next level
-                    suffix = suffix.substring(labelIndex);
+                    suffix = suffix.substring(labelIndex + 1);
                     parentNode = rootChild;
-                    rootChild = getChildWithCommonPrefix(rootChild, suffix);
-                    assert rootChild != null;
+                    rootChild = getChildWithCommonPrefix(parentNode, suffix);
+                    if (rootChild == null) {
+                        parentNode.getChildren().add(new Node(suffix));
+                        return;
+                    }
                     label = rootChild.getLabel();
                     labelIndex = 0;
                 } else {
