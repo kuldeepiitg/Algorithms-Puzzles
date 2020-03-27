@@ -23,3 +23,10 @@ Initially:  1, 2, 3, 4, 5, 6, 7, 8, 9, 10 <br>
 5 is the last man remaining.
 
 
+Solution:
+=====
+Brute force: Keep iterating and removing numbers.
+
+Time: `nLogn`
+
+Better Solution: https://www.geeksforgeeks.org/puzzle-100-people-in-a-circle-with-gun-puzzle/
